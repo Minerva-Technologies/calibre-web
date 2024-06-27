@@ -137,7 +137,7 @@ def create_app():
 
     lm.login_view = 'web.login'
     lm.anonymous_user = ub.Anonymous
-    lm.session_protection = 'strong' if config.config_session == 1 else "basic"
+    lm.session_protection = 'basic' #'strong' if config.config_session == 1 else "basic"
 
     db.CalibreDB.update_config(config)
     db.CalibreDB.setup_db(config.config_calibre_dir, cli_param.settings_path)
