@@ -1,0 +1,25 @@
+name: build-deploy
+
+on:
+  push:
+    branches:
+      - main  
+
+permissions:
+  id-token: write
+  contents: read  # Required permissions to read the reusable workflow
+  packages: write  # Grants permission to write to GitHub Packages (ghcr.io)  
+
+jobs:
+  continuous-integration:
+    uses: Minerva-Technologies/minerva-ci/.github/workflows/docker-ci.yml@main
+    with:
+      dockerfile_path: './Dockerfile'
+      docker_build_ctx: './'
+      enable_deploy: true
+      config_path: '01-calibre'
+      yaml_run_query_tag: '.image.tag'
+      value_file_name: 'values.yaml'
+      image_name: 'calibre'
+    secrets:
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
